@@ -1,17 +1,44 @@
-export async function fetchImages(search) {
-  const params = new URLSearchParams({
-    q: search.trim(),
-    key: process.env.PIXABAY_KEY,
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: true,
-  });
-  try {
-    const response = await fetch(
-      `https://pixabay.com/api/?${params.toString()}`
-    );
-    return await response.json();
-  } catch (error) {
-    console.log(error);
+import axios from 'axios';
+
+const searchImages = axios.create({
+  baseURL: 'https://pixabay.com/api/',
+});
+
+export default class ImagesApiServise {
+  constructor() {
+    this.searchQuery = ' ';
+    this.page = 1;
+  }
+
+  async fetchImages() {
+    const params = {
+      q: this.searchQuery.trim(),
+      key: process.env.PIXABAY_KEY,
+      image_type: 'photo',
+      orientation: 'horizontal',
+      safesearch: true,
+      per_page: 40,
+      page: this.page,
+    };
+
+    try {
+      const response = await searchImages.get('', { params });
+      this.page += 1;
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  get query() {
+    return this.searchQuery;
+  }
+
+  set query(newQuery) {
+    this.searchQuery = newQuery;
+  }
+
+  resetPage() {
+    this.page = 1
   }
 }
