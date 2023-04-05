@@ -22,6 +22,7 @@ async function onSubmitForm(evt) {
   evt.preventDefault();
   imagesApiServise.query = evt.target.elements.searchQuery.value;
   imagesApiServise.resetPage();
+  gallery.innerHTML = "";
   if (imagesApiServise.query.trim() === '') {
     return;
   }
