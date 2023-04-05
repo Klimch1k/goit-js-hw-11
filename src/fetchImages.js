@@ -13,7 +13,7 @@ export default class ImagesApiServise {
   async fetchImages() {
     const params = {
       q: this.searchQuery.trim(),
-      key: process.env.PIXABAY_KEY,
+      key: '35001315-ff900fe6dc9bb67b55de16f8c',
       image_type: 'photo',
       orientation: 'horizontal',
       safesearch: true,
